@@ -3,5 +3,9 @@ Function MusicAnalyzer {
   Clear-Host
   OutputScriptHeader
 
-  Write-Host "Your module was initialized and it works!"
+  Write-Host " >> $($Emojis["warning"]) All changes will be written to files!"
+
+  # Ask for path
+  $WorkingFolder = Set-Path
+  Clear-Host
 }
