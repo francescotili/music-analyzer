@@ -35,3 +35,17 @@ Function OutputScriptHeader {
 function OutputSpacer {
   for ($i = 0; $i -le 10; $i++) { Write-Host "" }
 }
+
+function OutputUserError {
+  [CmdLetBinding(DefaultParameterSetName)]
+  Param (
+    [Parameter(Mandatory = $true)]
+    [String]$Value
+  )
+
+  switch ($Value) {
+    'invalidPath' { Write-Error -Message " $($Emojis["error"]) Specified path is not valid! Exiting..." -ErrorAction Stop }
+    'emptyPath' { Write-Error -Message " $($Emojis["error"]) You have not specified a path. Exiting..." -ErrorAction Stop }
+    Default {}
+  }
+}
