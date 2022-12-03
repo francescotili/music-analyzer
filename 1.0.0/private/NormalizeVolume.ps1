@@ -36,7 +36,7 @@ function NormalizeVolume {
     # Output fileName already exist, increment CopyNum
     $i += 1
     $copyNum = '{0:d3}' -f $i
-    $newOutputFilename = "$($outputFile.name)+$($copyNum)"
+    $newOutputFilename = "$($inputFile.name + $outputSuffix)+$($copyNum)"
     $outputFile.fullFilePath = $outputFile.path + "\" + $newOutputFilename + "." + $outputFile.extension
     $outputFile.name = $newOutputFilename
   }
