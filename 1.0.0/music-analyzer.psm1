@@ -6,7 +6,7 @@ $global:Emojis = @{
   "calendar" = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F4C6", 16))
   "pen"      = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F4DD", 16))
   "time"     = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F551", 16))
-  "device"   = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F4F1", 16))
+  "volume"   = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F509", 16))
   "question" = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("2753", 16))
 }
 
@@ -15,6 +15,7 @@ $global:Emojis = @{
 . $PSScriptRoot\private\CheckFileType.ps1
 . $PSScriptRoot\private\GetVolumeInfo.ps1
 . $PSScriptRoot\private\Helpers.ps1
+. $PSScriptRoot\private\NormalizeVolume.ps1
 . $PSScriptRoot\private\Outputs.ps1
 
 # PUBLIC FUNCTIONS

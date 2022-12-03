@@ -63,6 +63,7 @@ function OutputVolumeAnalysis {
   switch ($Value) {
     'noAdjustment' { Write-Host " $($Emojis["check"]) Max volume at 0 dB" }
     'adjustmentNeeded' { Write-Host " $($Emojis["warning"]) Max volume is $($Volume) dB, volume normalization needed..." }
+    'normalizing' { Write-Host " $($Emojis["volume"]) Normalizing ..." }
     Default {}
   }
 }
