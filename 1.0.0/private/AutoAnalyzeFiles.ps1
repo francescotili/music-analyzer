@@ -31,9 +31,17 @@ function AutoAnalyzeFiles {
     $barStatus = "{0:N1}% - Time remaining: {1}" -f $progress, $etaOutput
     $status = "{0:N1}%" -f $progress
 
+    # Variables for the file
+    $currentFile = @{
+      fullFilePath = $_.FullName
+      path         = Split-Path -Path $_.FullName -Parent
+      name         = (GetFilename( Split-Path -Path $_.FullName -Leaf )).fileName
+      extension    = (GetFilename( Split-Path -Path $_.FullName -Leaf )).extension
+    }
+
     $fileCompleted += 1
     Write-Progress -Activity $activity -PercentComplete $progress -CurrentOperation "Analyzing $($currentFile.name).$($currentFile.extension) ..." -Status "$($barStatus)"
-    Write-Host " $($_.FullName) | $($status) " -Background Yellow -Foreground Black
+    Write-Host " $($fileCompleted)/$($fileNumber) | $($status) | $($currentFile.name).$($currentFile.extension) " -Background Yellow -Foreground Black
     Write-Host ""
   }
 }
