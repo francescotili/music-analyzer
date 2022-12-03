@@ -43,13 +43,21 @@ function AutoAnalyzeFiles {
     Write-Progress -Activity $activity -PercentComplete $progress -CurrentOperation "Analyzing $($currentFile.name).$($currentFile.extension) ..." -Status "$($barStatus)"
     Write-Host " $($fileCompleted)/$($fileNumber) | $($status) | $($currentFile.name).$($currentFile.extension) " -Background Yellow -Foreground Black
 
-    $maxVolume = Get-VolumeInfo $currentFile
-    if ($maxVolume -ne 0) {
-      OutputVolumeAnalysis "adjustmentNeeded" $maxVolume
+    if ( (CheckFileType $currentFile) -eq 'Supported' ) {
+      $maxVolume = Get-VolumeInfo $currentFile
+      if ($maxVolume -ne 0) {
+        OutputVolumeAnalysis "adjustmentNeeded" $maxVolume
+      }
+      else {
+        OutputVolumeAnalysis "noAdjustment"      
+      }
     }
     else {
-      OutputVolumeAnalysis "noAdjustment"      
+      # File probably not supported
+      OutputCheckFileType "unsupported"
     }
+
+    
     Write-Host ""
   }
 }

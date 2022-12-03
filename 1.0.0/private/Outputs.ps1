@@ -66,3 +66,16 @@ function OutputVolumeAnalysis {
     Default {}
   }
 }
+
+function OutputCheckFileType {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory = $true)]
+    [String]$Value
+  )
+
+  switch ($Value) {
+    'unsupported' { Write-Host " $($Emojis["ban"]) File not supported" }
+    Default {}
+  }
+}
