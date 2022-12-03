@@ -33,7 +33,7 @@ Function OutputScriptHeader {
 }
 
 function OutputSpacer {
-  for ($i = 0; $i -le 10; $i++) { Write-Host "" }
+  for ($i = 0; $i -le 14; $i++) { Write-Host "" }
 }
 
 function OutputUserError {
@@ -57,26 +57,39 @@ function OutputVolumeAnalysis {
     [String]$Value,
 
     [Parameter(Mandatory = $false)]
+    [String]$fileName,
+
+    [Parameter(Mandatory = $false)]
     [String]$Volume
+
   )
 
+  if ( [float]$volume -ge 0 ) {
+    [string]$stringVolume = "+{0:N1} dB" -f [float]$Volume
+  }
+  else {
+    [string]$stringVolume = "{0:N1} dB" -f [float]$Volume
+  }
+
   switch ($Value) {
-    'noAdjustment' { Write-Host " $($Emojis["check"]) Max volume at 0 dB" }
-    'adjustmentNeeded' { Write-Host " $($Emojis["warning"]) Max volume is $($Volume) dB, volume normalization needed..." }
-    'normalizing' { Write-Host " $($Emojis["volume"]) Normalizing ..." }
+    'noAdjustment' { Write-Host (" {0} {1} | {2}" -f $Emojis["check"], $stringVolume, $fileName ) }
+    'adjustmentNeeded' { Write-Host (" {0} {1} | {2}" -f $Emojis["warning"], $stringVolume, $fileName ) }
+    'noNormalizing' { Write-Host (" $($Emojis["check"]) No need to normalize, max volume is alread 0 dB at the album level") }
+    'normalizing' { Write-Host " $($Emojis["volume"]) Normalizing ...    | $($fileName)" }
+    'skipping' { Write-Host " $($Emojis["check"]) Already normalized | $($fileName)" }
     Default {}
   }
 }
 
-function OutputCheckFileType {
-  [CmdletBinding()]
+function OutputFolderAnalysis {
+  [CmdletBinding(DefaultParameterSetName)]
   param (
     [Parameter(Mandatory = $true)]
     [String]$Value
   )
 
-  switch ($Value) {
-    'unsupported' { Write-Host " $($Emojis["ban"]) File not supported" }
+  switch ($value) {
+    'noFiles' { Write-Host " $($Emojis["check"]) No supported files in this folder" }
     Default {}
   }
 }
