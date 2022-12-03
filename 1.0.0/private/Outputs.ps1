@@ -33,7 +33,7 @@ Function OutputScriptHeader {
 }
 
 function OutputSpacer {
-  for ($i = 0; $i -le 10; $i++) { Write-Host "" }
+  for ($i = 0; $i -le 14; $i++) { Write-Host "" }
 }
 
 function OutputUserError {
