@@ -17,6 +17,7 @@ $global:Emojis = @{
 . $PSScriptRoot\private\Helpers.ps1
 . $PSScriptRoot\private\NormalizeVolume.ps1
 . $PSScriptRoot\private\Outputs.ps1
+. $PSScriptRoot\private\ProgressBar.ps1
 
 # PUBLIC FUNCTIONS
 . $PSScriptRoot\public\MusicAnalyzer.ps1
