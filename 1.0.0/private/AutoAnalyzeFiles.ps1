@@ -47,6 +47,7 @@ function AutoAnalyzeFiles {
       $maxVolume = Get-VolumeInfo $currentFile
       if ($maxVolume -ne 0) {
         OutputVolumeAnalysis "adjustmentNeeded" $maxVolume
+        NormalizeVolume $currentFile $maxVolume
       }
       else {
         OutputVolumeAnalysis "noAdjustment"      
