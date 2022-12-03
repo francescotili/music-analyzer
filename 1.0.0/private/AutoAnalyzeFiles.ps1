@@ -101,7 +101,7 @@ function AutoAnalyzeFiles {
       else {
         foreach ($analysis in $volumeAnalysis) {
           $fileCompleted += 1
-          $fileProgressBar.UpdateProgress("Normalizing $($currentFile.name).$($currentFile.extension)", $fileCompleted)
+          $fileProgressBar.UpdateProgress("Normalizing $($analysis.file.name).$($analysis.file.extension)", $fileCompleted)
 
           if ( $analysis.normalize ) {
             #OutputVolumeAnalysis "normalizing" $analysis.file.name
