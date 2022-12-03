@@ -49,3 +49,33 @@ function OutputUserError {
     Default {}
   }
 }
+
+function OutputVolumeAnalysis {
+  [CmdletBinding(DefaultParameterSetName)]
+  param (
+    [Parameter(Mandatory = $true)]
+    [String]$Value,
+
+    [Parameter(Mandatory = $false)]
+    [String]$Volume
+  )
+
+  switch ($Value) {
+    'noAdjustment' { Write-Host " $($Emojis["check"]) Max volume at 0 dB" }
+    'adjustmentNeeded' { Write-Host " $($Emojis["warning"]) Max volume is $($Volume) dB, volume normalization needed..." }
+    Default {}
+  }
+}
+
+function OutputCheckFileType {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory = $true)]
+    [String]$Value
+  )
+
+  switch ($Value) {
+    'unsupported' { Write-Host " $($Emojis["ban"]) File not supported" }
+    Default {}
+  }
+}
