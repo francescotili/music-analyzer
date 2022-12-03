@@ -30,12 +30,6 @@ function NormalizeVolume {
     extension    = $inputFile.extension
   }
 
-  $params = @(
-    "-i", $inputFile.fullFilePath,
-    "-filter:a", "volume=$([string]($maxVolume * -1))dB",
-    $outputFile.fullFilePath
-  )
-
   # Check if outputfile already exists
   $i = 0
   while (Test-Path -path $outputFile.fullFilePath) {
@@ -45,10 +39,16 @@ function NormalizeVolume {
     $newOutputFilename = "$($outputFile.name)+$($copyNum)"
     $outputFile.fullFilePath = $outputFile.path + "\" + $newOutputFilename + "." + $outputFile.extension
     $outputFile.name = $newOutputFilename
-    write-Host $outputFile.fullFilePath
   }
+
+  # Build parameters for normalization
+  $params = @(
+    "-i", $inputFile.fullFilePath,
+    "-filter:a", "volume=$([string]($maxVolume * -1))dB",
+    $outputFile.fullFilePath
+  )
 
   # Execute normalization
   # 2> $null is to cutoff output
-  # ffmpeg $params 2> $null
+  ffmpeg $params 2> $null
 }
