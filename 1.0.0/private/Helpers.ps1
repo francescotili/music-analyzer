@@ -57,7 +57,7 @@ function CalculateEtaOutput {
   $output = ""
   $now = Get-Date
 
-  if ( $totalCompleted -gt 0) {
+  if ( $itemCompleted -gt 0) {
     # Calculate remaining time
     $elapsed = $now - $startTime
     $speed = $elapsed.TotalSeconds / $itemCompleted
