@@ -24,25 +24,31 @@ function NormalizeVolume {
 
   $outputSuffix = "_norm"
   $outputFile = @{
-    fullFilePath = $inputFile.path + "\" + $inputFile.name + $outputSuffix + 
-    "." + $inputFile.extension
+    fullFilePath = $inputFile.path + "\" + $inputFile.name + $outputSuffix + "." + $inputFile.extension
     path         = $inputFile.path
     name         = $inputFile.name + $outputSuffix
     extension    = $inputFile.extension
   }
-  Write-Host $inputFile.fullFilePath
-  Write-Host ([math]::Round(($maxVolume * -1), 2))
-  Write-Host $outputFile.fullFilePath
 
   $params = @(
     "-i", $inputFile.fullFilePath,
     "-filter:a", "volume=$([string]($maxVolume * -1))dB",
     $outputFile.fullFilePath
   )
-  # TODO: Check if outputfile already exists
+
+  # Check if outputfile already exists
+  $i = 0
+  while (Test-Path -path $outputFile.fullFilePath) {
+    # Output fileName already exist, increment CopyNum
+    $i += 1
+    $copyNum = '{0:d3}' -f $i
+    $newOutputFilename = "$($outputFile.name)+$($copyNum)"
+    $outputFile.fullFilePath = $outputFile.path + "\" + $newOutputFilename + "." + $outputFile.extension
+    $outputFile.name = $newOutputFilename
+    write-Host $outputFile.fullFilePath
+  }
 
   # Execute normalization
   # 2> $null is to cutoff output
-  # Warning: if output file already exist, the script could hang!
   # ffmpeg $params 2> $null
 }
