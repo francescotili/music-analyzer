@@ -50,6 +50,6 @@ function NormalizeVolume {
 
   # Execute normalization
   # 2> $null is to cutoff output
-  OutputVolumeAnalysis 'normalizing'
+  OutputVolumeAnalysis 'normalizing' $inputFile.name
   ffmpeg $params 2> $null
 }
