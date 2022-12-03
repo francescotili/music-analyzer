@@ -8,4 +8,6 @@ Function MusicAnalyzer {
   # Ask for path
   $WorkingFolder = Set-Path
   Clear-Host
+  OutputSpacer
+  AutoAnalyzeFiles $workingFolder
 }
