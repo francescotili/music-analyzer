@@ -42,7 +42,8 @@ function AutoAnalyzeFiles {
     $fileCompleted += 1
     Write-Progress -Activity $activity -PercentComplete $progress -CurrentOperation "Analyzing $($currentFile.name).$($currentFile.extension) ..." -Status "$($barStatus)"
     Write-Host " $($fileCompleted)/$($fileNumber) | $($status) | $($currentFile.name).$($currentFile.extension) " -Background Yellow -Foreground Black
-    $output = Get-VolumeInfo $currentFile # Type: System.Object[]
+    $maxVolume = Get-VolumeInfo $currentFile
+    Write-Host $maxVolume
     Write-Host ""
   }
 }
