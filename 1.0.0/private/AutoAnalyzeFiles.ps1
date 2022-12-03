@@ -14,6 +14,14 @@ function AutoAnalyzeFiles {
     $workingFolder
   )
 
+  # Detect total number of files
+  $fileNumber = 0
+  $folderList = Get-ChildItem -Path $workingFolder -Directory -Recurse -ErrorAction SilentlyContinue -Force
+  $folderList | ForEach-Object {
+    $fileList = Get-ChildItem -Path $_.FullName -File
+    $fileNumber += $fileList.Count
+  }
+  
   $fileList = Get-ChildItem -Path $workingFolder -File
 
   # Initialize progress bar variables
@@ -60,5 +68,5 @@ function AutoAnalyzeFiles {
 
     
     Write-Host ""
-  }
+  }#>
 }
