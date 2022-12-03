@@ -18,19 +18,12 @@ function AutoAnalyzeFiles {
 
   # Initialize progress bar variables
   $fileCompleted = 0
-  $progress = 0
   $activity = "   ANALYZING FOLDER: $(($workingFolder.split("\"))[-1])"
   $fileNumber = $fileList.Count
-  $etaStartTime = Get-Date
+  $fileProgressBar = [ProgressBar]::new($activity, 1, $fileNumber)
 
   # Start looping on all the files of the workingFolder
   $fileList | ForEach-Object {
-    # Initialize progress bar
-    $etaOutput = CalculateEtaOutput $etaStartTime $fileCompleted $fileNumber
-    $progress = 100 * (($fileCompleted) / ($fileNumber))
-    $barStatus = "{0:N1}% - Time remaining: {1}" -f $progress, $etaOutput
-    $status = "{0:N1}%" -f $progress
-
     # Variables for the file
     $currentFile = @{
       fullFilePath = $_.FullName
@@ -40,8 +33,8 @@ function AutoAnalyzeFiles {
     }
 
     $fileCompleted += 1
-    Write-Progress -Activity $activity -PercentComplete $progress -CurrentOperation "Analyzing $($currentFile.name).$($currentFile.extension) ..." -Status "$($barStatus)"
-    Write-Host " $($fileCompleted)/$($fileNumber) | $($status) | $($currentFile.name).$($currentFile.extension) " -Background Yellow -Foreground Black
+    $fileProgressBar.UpdateProgress("Analyzing $($currentFile.name).$($currentFile.extension) ...", $fileCompleted)
+    Write-Host " $($fileCompleted)/$($fileNumber) | $($currentFile.name).$($currentFile.extension) " -Background Yellow -Foreground Black
 
     if ( (CheckFileType $currentFile) -eq 'Supported' ) {
       $maxVolume = Get-VolumeInfo $currentFile
