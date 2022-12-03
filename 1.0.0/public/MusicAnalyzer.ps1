@@ -10,4 +10,5 @@ Function MusicAnalyzer {
   Clear-Host
   OutputSpacer
   AutoAnalyzeFiles $workingFolder
+  OutputScriptFooter
 }
