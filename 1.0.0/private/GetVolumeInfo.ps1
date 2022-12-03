@@ -27,12 +27,12 @@ function Get-VolumeInfo {
   )
   $ffmpegOutput = ffmpeg $params 2>&1
 
-  $regEx = "max_volume: ([+-])(\d*[.]\d) dB"
+  $regEx = "max_volume: ([+-]?\d*[.]\d) dB"
   $maxVolumeString = $ffmpegOutput | Select-String -Pattern "max_volume:"
   $maxVolume = 0
   if ( $maxVolumeString ) {
     # Returns positive or negative
-    $maxVolume = [Float](([regex]::Matches($maxVolumeString, $regEx)).Groups[1].Value.trim() + ([regex]::Matches($maxVolumeString, $regEx)).Groups[2].Value.trim())
+    $maxVolume = [Float](([regex]::Matches($maxVolumeString, $regEx)).Groups[1].Value.trim())
   }
 
   return $maxVolume
