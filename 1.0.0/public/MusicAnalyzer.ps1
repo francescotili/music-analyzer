@@ -27,7 +27,7 @@ Function MusicAnalyzer {
       # -restoreBackups specified
       Clear-Host
       OutputScriptHeader "RestoreBackups"
-      # RestoreBackups
+      RestoreBackups
     }
     Default {
       # No parameters specified

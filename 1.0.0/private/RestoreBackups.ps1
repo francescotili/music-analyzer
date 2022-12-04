@@ -2,17 +2,7 @@ function RestoreBackups {
   <#
     .SYNOPSIS
       Restore from the file generated as backup, deleting/overwriting original ones
-    
-    .PARAMETER workingFolder
-      Required. The folder to scan and restore.
   #>
-
-  [CmdletBinding(DefaultParameterSetName)]
-  param (
-    [Parameter(Mandatory = $true)]
-    [String]
-    $workingFolder
-  )
 
   # Set the workingFolder
   $userPath = Read-Host ">> Please specify the path to restore"
