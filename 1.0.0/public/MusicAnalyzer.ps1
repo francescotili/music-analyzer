@@ -11,4 +11,7 @@ Function MusicAnalyzer {
   OutputSpacer
   AutoAnalyzeFiles $workingFolder
   OutputScriptFooter
+
+  # Delete workingFolder global variable
+  $WorkingFolder = ""
 }
