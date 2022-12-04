@@ -42,6 +42,11 @@ Function OutputScriptHeader {
         Write-Host "This command will scan a specified folder and subfolders for .backup files and it will deleted them."
         Write-Host "$($Emojis["warning"]) The files will be deleted forever!"
       }
+      "RestoreBackups" {
+        Write-Host ""
+        Write-Host "This command will scan a specified folder and subfolders for .backup files and it will restore them."
+        Write-Host "$($Emojis["warning"]) Original files will be overwritten, if present!"
+      }
       Default {}
     }
   }

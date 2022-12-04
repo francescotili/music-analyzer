@@ -25,7 +25,9 @@ Function MusicAnalyzer {
     }
     "False-True" {
       # -restoreBackups specified
-      Write-Host "Not yet implemented"
+      Clear-Host
+      OutputScriptHeader "RestoreBackups"
+      # RestoreBackups
     }
     Default {
       # No parameters specified
