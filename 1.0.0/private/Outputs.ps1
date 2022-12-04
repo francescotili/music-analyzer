@@ -135,7 +135,10 @@ function OutputCleanResult {
   [CmdLetBinding(DefaultParameterSetName)]
   Param (
     [Parameter(Mandatory = $true)]
-    [String]$Value
+    [String]$Value,
+
+    [Parameter(Mandatory = $false)]
+    [String]$fileName
   )
 
   switch ($value) {
@@ -151,6 +154,9 @@ function OutputCleanResult {
       Write-Host ""
       Write-Host "        NO FILES FOUND         " -BackgroundColor DarkRed -ForegroundColor White
       Write-Host ""
+    }
+    'deleted' {
+      Write-Host " $($Emojis["delete"]) Deleting... | $($fileName)" 
     }
     Default {}
   }
