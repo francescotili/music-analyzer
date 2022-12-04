@@ -8,7 +8,7 @@ $global:Emojis = @{
   "ban"      = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("26D4", 16))
   "info"     = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F7E6", 16))
   "pen"      = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F4DD", 16))
-  "time"     = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F551", 16))
+  "delete"   = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("274C", 16))
   "volume"   = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F509", 16))
   "question" = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("2753", 16))
 }
