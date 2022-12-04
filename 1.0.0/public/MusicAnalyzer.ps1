@@ -9,19 +9,21 @@ Function MusicAnalyzer {
   if ( $cleanBackups ) {
     Clear-Host
     OutputScriptHeader "CleanBackups"
-
     CleanBackups
   }
   else {
     # Show script header
     Clear-Host
     OutputScriptHeader
-
+    
     # Ask for path
-    $WorkingFolder = Set-Path
+    $workingFolder = Set-Path
     Clear-Host
     OutputSpacer
     AutoAnalyzeFiles $workingFolder
     OutputScriptFooter
+
+    # Delete workingFolder global variable
+    $WorkingFolder = ""
   }
 }
