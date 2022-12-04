@@ -17,7 +17,6 @@ function CleanBackups {
   # Analyze and set the workingFolder
   if ($workingFolder -ne "") {
     # Global working folder is passed - i.E. after normal workflow of analyzing
-    # Write-Host "$($Emojis["info"]) $($workingFolder)"
     $userChoice = Read-Host "$($Emojis["question"]) Would you like to delete *.backup files? All the subdirectories will be also cleaned! [s/n]"
     switch ($userChoice) {
       's' {
