@@ -13,6 +13,7 @@ $global:Emojis = @{
 # PRIVATE FUNCTIONS
 . $PSScriptRoot\private\AutoAnalyzeFiles.ps1
 . $PSScriptRoot\private\CheckFileType.ps1
+. $PSScriptRoot\private\CleanBackups.ps1
 . $PSScriptRoot\private\GetVolumeInfo.ps1
 . $PSScriptRoot\private\Helpers.ps1
 . $PSScriptRoot\private\NormalizeVolume.ps1
