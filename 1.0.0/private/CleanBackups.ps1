@@ -21,9 +21,7 @@ function CleanBackups {
     $userChoice = Read-Host "$($Emojis["question"]) Would you like to delete *.backup files? [s/n]"
     switch ($userChoice) {
       's' { CleanFiles $workingFolder }
-      'n' {
-        Read-Host " >> Ok, press enter to exit"
-      }
+      'n' { Read-Host " >> Ok, press enter to exit" }
       Default {
         # False input, do not delete backup files
         OutputUserError "invalidChoice"
@@ -32,7 +30,13 @@ function CleanBackups {
   }
   else {
     # No global specified, ask the user
-    Write-Host "Ask the user"
+    $userPath = Read-Host ">> Please specify the path to clean"
+    if ($userPath -ne "") {
+      $userPath = $userPath -replace '["]', ''
+      if (Test-Path -Path "$($userPath)") { CleanFiles $userPath }
+      else { OutputUserError "invalidPath" }
+    }
+    else { OutputUserError "emptyPath" }
   }
 }
 
