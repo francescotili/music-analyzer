@@ -1,32 +1,46 @@
 Function MusicAnalyzer {
-  [CmdletBinding(DefaultParameterSetName)]
+  [CmdletBinding()]
   param (
     [Parameter(Mandatory = $false)]
     [switch]
-    $cleanBackups = $false
+    $cleanBackups = $false,
+
+    [Parameter(Mandatory = $false)]
+    [switch]
+    $restoreBackups = $false
   )
 
-  if ( $cleanBackups ) {
-    Clear-Host
-    OutputScriptHeader "CleanBackups"
-    CleanBackups
-  }
-  else {
-    # Show script header
-    Clear-Host
-    OutputScriptHeader
+  $flags = "$($cleanBackups)-$($restoreBackups)"
+
+  switch ($flags) {
+    "True-True" {
+      # Both parameters -cleanBackups and -restoreBackups specified
+      Write-Host " $($Emojis["ban"]) Incompatible flags specified!"
+    }
+    "True-False" {
+      # -cleanBackups specified
+      Clear-Host
+      OutputScriptHeader "CleanBackups"
+      CleanBackups
+    }
+    "False-True" {
+      # -restoreBackups specified
+      Write-Host "Not yet implemented"
+    }
+    Default {
+      # No parameters specified
+      Clear-Host
+      OutputScriptHeader
     
-    # Ask for path
-    $workingFolder = Set-Path
-    Clear-Host
-    OutputSpacer
-    AutoAnalyzeFiles $workingFolder
-    OutputScriptFooter
+      # Ask for path
+      $workingFolder = Set-Path
+      Clear-Host
+      OutputSpacer
+      AutoAnalyzeFiles $workingFolder
+      OutputScriptFooter
 
-    # Start cleanup workflow
-    CleanBackups $workingFolder
-
-    # Delete workingFolder global variable
-    $WorkingFolder = ""
+      # Start cleanup workflow
+      CleanBackups $workingFolder
+    }
   }
 }
