@@ -151,7 +151,7 @@ function OutputCleanResult {
       Write-Host ""
     }
     'deleted' {
-      Write-Host " $($Emojis["delete"]) Deleting... | $($fileName)" 
+      Write-Host " $($Emojis["delete"]) Deleted | $($fileName)" 
     }
     Default {}
   }
