@@ -23,6 +23,9 @@ Function MusicAnalyzer {
     AutoAnalyzeFiles $workingFolder
     OutputScriptFooter
 
+    # Start cleanup workflow
+    CleanBackups $workingFolder
+
     # Delete workingFolder global variable
     $WorkingFolder = ""
   }
