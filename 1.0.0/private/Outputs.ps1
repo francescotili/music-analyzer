@@ -130,3 +130,28 @@ function OutputScriptFooter {
   Write-Host ""
   Write-Host ""
 }
+
+function OutputCleanResult {
+  [CmdLetBinding(DefaultParameterSetName)]
+  Param (
+    [Parameter(Mandatory = $true)]
+    [String]$Value
+  )
+
+  switch ($value) {
+    'completed' {
+      Write-Host ""
+      Write-Host "                               " -BackgroundColor DarkGreen -ForegroundColor White
+      Write-Host "      CLEANING  COMPLETED      " -BackgroundColor DarkGreen -ForegroundColor White
+      Write-Host "                               " -BackgroundColor DarkGreen -ForegroundColor White
+      (New-Object System.Media.SoundPlayer "$env:windir\Media\Alarm03.wav").Play()
+      Write-Host ""
+    }
+    'noFiles' {
+      Write-Host ""
+      Write-Host "        NO FILES FOUND         " -BackgroundColor DarkRed -ForegroundColor White
+      Write-Host ""
+    }
+    Default {}
+  }
+}
