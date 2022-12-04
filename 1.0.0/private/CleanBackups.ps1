@@ -20,7 +20,10 @@ function CleanBackups {
     # Write-Host "$($Emojis["info"]) $($workingFolder)"
     $userChoice = Read-Host "$($Emojis["question"]) Would you like to delete *.backup files? All the subdirectories will be also cleaned! [s/n]"
     switch ($userChoice) {
-      's' { CleanFiles $workingFolder }
+      's' {
+        Write-Host ""
+        CleanFiles $workingFolder 
+      }
       'n' { Read-Host " >> Ok, press enter to exit" }
       Default {
         # False input, do not delete backup files

@@ -123,11 +123,6 @@ function OutputScriptFooter {
   Write-Host "                               " -BackgroundColor DarkGreen -ForegroundColor White
 
   (New-Object System.Media.SoundPlayer "$env:windir\Media\Alarm03.wav").Play()
-  for ( $i = 0; $i -lt $completed.Length; $i++ ) {
-    Write-Host $completed[$i] -NoNewline
-  }
-  Write-Host ""
-  Write-Host ""
   Write-Host ""
 }
 
@@ -156,7 +151,7 @@ function OutputCleanResult {
       Write-Host ""
     }
     'deleted' {
-      Write-Host " $($Emojis["delete"]) Deleting... | $($fileName)" 
+      Write-Host " $($Emojis["delete"]) Deleted | $($fileName)" 
     }
     Default {}
   }
