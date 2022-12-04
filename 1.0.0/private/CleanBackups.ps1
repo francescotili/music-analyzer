@@ -18,7 +18,7 @@ function CleanBackups {
   if ($workingFolder -ne "") {
     # Global working folder is passed - i.E. after normal workflow of analyzing
     # Write-Host "$($Emojis["info"]) $($workingFolder)"
-    $userChoice = Read-Host "$($Emojis["question"]) Would you like to delete *.backup files? [s/n]"
+    $userChoice = Read-Host "$($Emojis["question"]) Would you like to delete *.backup files? All the subdirectories will be also cleaned! [s/n]"
     switch ($userChoice) {
       's' { CleanFiles $workingFolder }
       'n' { Read-Host " >> Ok, press enter to exit" }
@@ -41,11 +41,34 @@ function CleanBackups {
 }
 
 function CleanFiles {
+  <#
+    .SYNOPSIS
+      This function search all the .backup files in the specified folder and its subfolders, then deletes them
+    
+    .PARAMETER workingPath
+      Required. The folder to scan
+  #>
   [CmdLetBinding(DefaultParameterSetName)]
   Param (
     [Parameter(Mandatory = $true)]
     [String]$workingPath
   )
 
-  Write-Host "It works"
+  # Analize provided path
+  $filesToCleanup = Get-ChildItem -Path $workingPath -Filter "*.backup" -Recurse
+  
+  # Initialize file progress bar variables
+  $fileCompleted = 0
+  $fileNumber = $filesToCleanup.Count
+  $activity = "Cleaning up backup files"
+  $activityProgressBar = [ProgressBar]::new($activity, 0, $fileNumber)
+
+  if ( $fileNumber -gt 0 ) {
+    Write-Host "Detected $($fileNumber) files to clean"
+  }
+  else {
+    OutputCleanResult "noFiles"
+  }
+
+  #$activityProgressBar.UpdateProgress("new activity",$fileCompleted)
 }
