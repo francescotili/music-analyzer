@@ -66,6 +66,7 @@ function OutputUserError {
   )
 
   switch ($Value) {
+    'invalidChoice' { Write-Host " $($Emojis["error"]) Invalid choice!" }
     'invalidPath' { Write-Error -Message " $($Emojis["error"]) Specified path is not valid! Exiting..." -ErrorAction Stop }
     'emptyPath' { Write-Error -Message " $($Emojis["error"]) You have not specified a path. Exiting..." -ErrorAction Stop }
     Default {}
