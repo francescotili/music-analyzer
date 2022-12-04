@@ -64,11 +64,25 @@ function CleanFiles {
   $activityProgressBar = [ProgressBar]::new($activity, 0, $fileNumber)
 
   if ( $fileNumber -gt 0 ) {
-    Write-Host "Detected $($fileNumber) files to clean"
+    $filesToCleanup | ForEach-Object {
+      # File object
+      $currentFile = @{
+        fullFilePath = $_.FullName
+        path         = Split-Path -Path $_.FullName -Parent
+        name         = (GetFilename( Split-Path -Path $_.FullName -Leaf)).fileName
+        extension    = (GetFilename( Split-Path -Path $_.FullName -Leaf)).extension
+      }
+
+      # Deleting the file
+      $fileCompleted += 1
+      $activityProgressBar.UpdateProgress("Deleting $($currentFile.name).$($currentFile.extension)", $fileCompleted)
+      Remove-Item $currentFile.fullFilePath
+      OutputCleanResult "deleted" "$($currentFile.name).$($currentFile.extension)"
+    }
+    OutputCleanResult "completed"
   }
   else {
+    # No files found
     OutputCleanResult "noFiles"
   }
-
-  #$activityProgressBar.UpdateProgress("new activity",$fileCompleted)
 }
