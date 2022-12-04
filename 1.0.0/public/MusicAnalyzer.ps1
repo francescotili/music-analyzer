@@ -1,17 +1,29 @@
 Function MusicAnalyzer {
-  # Show script header
-  Clear-Host
-  OutputScriptHeader
+  [CmdletBinding(DefaultParameterSetName)]
+  param (
+    [Parameter(Mandatory = $false)]
+    [switch]
+    $cleanBackups = $false
+  )
 
-  Write-Host " >> $($Emojis["warning"]) All changes will be written to files!"
+  if ( $cleanBackups ) {
+    Clear-Host
+    OutputScriptHeader "CleanBackups"
+    CleanBackups
+  }
+  else {
+    # Show script header
+    Clear-Host
+    OutputScriptHeader
+    
+    # Ask for path
+    $workingFolder = Set-Path
+    Clear-Host
+    OutputSpacer
+    AutoAnalyzeFiles $workingFolder
+    OutputScriptFooter
 
-  # Ask for path
-  $WorkingFolder = Set-Path
-  Clear-Host
-  OutputSpacer
-  AutoAnalyzeFiles $workingFolder
-  OutputScriptFooter
-
-  # Delete workingFolder global variable
-  $WorkingFolder = ""
+    # Delete workingFolder global variable
+    $WorkingFolder = ""
+  }
 }
