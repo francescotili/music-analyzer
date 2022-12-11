@@ -20,7 +20,6 @@ function CleanBackups {
     $userChoice = Read-Host "$($Emojis["question"]) Would you like to delete *.backup files? All the subdirectories will be also cleaned! [s/n]"
     switch ($userChoice) {
       's' {
-        Write-Host ""
         CleanFiles $workingFolder 
       }
       'n' { Read-Host " >> Ok, press enter to exit" }

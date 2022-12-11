@@ -41,6 +41,42 @@ function AutoAnalyzeFiles {
     $fileList = Get-ChildItem -Path $folderPath -File
     $fileNumber = $fileList.Count
 
+    # Control of folder.jpg and backup.jpg
+    Write-Host " Analyzing images ... " -Background Yellow -Foreground Black
+    $folderJPGpresence = Test-Path -Path "$($folderPath)\folder.jpg"
+    $backupJPGpresence = Test-Path -Path "$($folderPath)\backup.jpg"
+
+    switch ("$($folderJPGpresence)-$($backupJPGpresence)") {
+      "True-True" {
+        OutputImageAnalysisResult "folderJPG_present"
+        OutputImageAnalysisResult "backupJPG_present"
+      }
+      "False-False" {
+        OutputImageAnalysisResult "folderJPG_notFound"
+        OutputImageAnalysisResult "backupJPG_notFound"
+        OutputImageAnalysisResult "restoreFailed"
+        "$(Get-Date) | No folder.jpg or backup.jpg | $($folderPath)" >> "$($workingFolder)\MusicAnalyzerOutput.txt"
+      }
+      "True-False" {
+        OutputImageAnalysisResult "folderJPG_present"
+        OutputImageAnalysisResult "backupJPG_notFound"
+        # Create backup.jpg from folder.jpg
+        Copy-Item -Path "$($folderPath)\folder.jpg" -Destination "$($folderPath)\backup.jpg"
+        OutputImageAnalysisResult "backupJPG_restored"
+      }
+      "False-True" {
+        OutputImageAnalysisResult "folderJPG_notFound"
+        OutputImageAnalysisResult "backupJPG_present"
+        # Create backup.jpg from folder.jpg
+        Copy-Item -Path "$($folderPath)\backup.jpg" -Destination "$($folderPath)\folder.jpg"
+        OutputImageAnalysisResult "folderJPG_restored"
+      }
+      Default {}
+    }
+    Write-Host ""
+
+    # Control of normalization
+    Write-Host " Analyzing volume ... " -Background Yellow -Foreground Black
     if ($fileNumber -gt 0 ) {
       # Initialize file progress bar variables
       $fileCompleted = 0
@@ -49,7 +85,6 @@ function AutoAnalyzeFiles {
     
       # Analyzing-Block
       $volumeAnalysis = [System.Collections.ArrayList]::new()
-      Write-Host " Analyzing volume ... " -Background Yellow -Foreground Black
       $fileList | ForEach-Object {
         # Variables for the file
         $currentFile = @{

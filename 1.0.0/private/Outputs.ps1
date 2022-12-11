@@ -206,3 +206,21 @@ function OutputRestoreResult {
     Default {}
   }
 }
+function OutputImageAnalysisResult {
+  [CmdletBinding(DefaultParameterSetName)]
+  Param (
+    [Parameter(Mandatory = $true)]
+    [String]$Value
+  )
+    
+  switch ($Value) {
+    'folderJPG_present' { Write-Host " $($Emojis["check"]) folder.jpg detected" }
+    'backupJPG_present' { Write-Host " $($Emojis["check"]) backup.jpg detected" }
+    'folderJPG_notFound' { Write-Host " $($Emojis["warning"]) folder.jpg not found" }
+    'backupJPG_notFound' { Write-Host " $($Emojis["warning"]) backup.jpg not found" }
+    'folderJPG_restored' { Write-Host " $($Emojis["check"]) folder.jpg restored from backup" }
+    'backupJPG_restored' { Write-Host " $($Emojis["check"]) backup.jpg created" }
+    'restoreFailed' { Write-Host " $($Emojis["error"]) You need to manually correct the images here" }
+    Default {}
+  }
+}
