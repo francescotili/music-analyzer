@@ -99,18 +99,22 @@ function AutoAnalyzeFiles {
         OutputVolumeAnalysis "noNormalizing"
       }
       else {
-        foreach ($analysis in $volumeAnalysis) {
-          $fileCompleted += 1
-          $fileProgressBar.UpdateProgress("Normalizing $($analysis.file.name).$($analysis.file.extension)", $fileCompleted)
+        if (-Not $global:AnalyzeOnlyActive) {
+          foreach ($analysis in $volumeAnalysis) {
+            $fileCompleted += 1
+            $fileProgressBar.UpdateProgress("Normalizing $($analysis.file.name).$($analysis.file.extension)", $fileCompleted)
 
-          if ( $analysis.normalize ) {
-            #OutputVolumeAnalysis "normalizing" $analysis.file.name
-            NormalizeVolume $analysis.file $maxVolumeGain
+            if ( $analysis.normalize ) {
+              NormalizeVolume $analysis.file $maxVolumeGain
+            }
+            else {
+              OutputVolumeAnalysis "skipping" $analysis.file.name
+            }
           }
-          else {
-            OutputVolumeAnalysis "skipping" $analysis.file.name
-          }
-        }      
+        }
+        else {
+          OutputVolumeAnalysis "needsNormalizing"
+        }
       }
       Write-Host ""
     }

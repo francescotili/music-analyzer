@@ -103,6 +103,7 @@ function OutputVolumeAnalysis {
     'noAdjustment' { Write-Host (" {0} {1} | {2}" -f $Emojis["check"], $stringVolume, $fileName ) }
     'adjustmentNeeded' { Write-Host (" {0} {1} | {2}" -f $Emojis["warning"], $stringVolume, $fileName ) }
     'noNormalizing' { Write-Host (" $($Emojis["check"]) No need to normalize, max volume is alread 0 dB at the album level") }
+    'needsNormalizing' { Write-Host (" $($Emojis["warning"]) Needs to be normalized at the album level") }
     'normalizing' { Write-Host " $($Emojis["volume"]) Normalizing ...    | $($fileName)" }
     'skipping' { Write-Host " $($Emojis["check"]) Already normalized | $($fileName)" }
     Default {}
@@ -158,6 +159,11 @@ function OutputCleanResult {
     'deleted' {
       Write-Host " $($Emojis["delete"]) Deleted | $($fileName)"
     }
+    'files_detected' {
+      Write-Host ""
+      Write-Host "        $($fileName) FILES FOUND         " -BackgroundColor DarkYellow -ForegroundColor White
+      Write-Host ""
+    }
     Default {}
   }
 }
@@ -190,6 +196,11 @@ function OutputRestoreResult {
     'noFiles' {
       Write-Host ""
       Write-Host "        NO FILES FOUND         " -BackgroundColor DarkRed -ForegroundColor White
+      Write-Host ""
+    }
+    'files_detected' {
+      Write-Host ""
+      Write-Host "    $($fileName) FILES CAN BE RESTORED   " -BackgroundColor DarkGreen -ForegroundColor White
       Write-Host ""
     }
     Default {}

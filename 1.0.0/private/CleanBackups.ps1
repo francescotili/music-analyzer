@@ -65,7 +65,7 @@ function CleanFiles {
   $activity = "Cleaning up backup files"
   $activityProgressBar = [ProgressBar]::new($activity, 0, $fileNumber)
 
-  if ( $fileNumber -gt 0 ) {
+  if ((-Not $global:AnalyzeOnlyActive) -and ($fileNumber -gt 0)) {
     $filesToCleanup | ForEach-Object {
       # File object
       $currentFile = @{
@@ -82,6 +82,9 @@ function CleanFiles {
       OutputCleanResult "deleted" "$($currentFile.name).$($currentFile.extension)"
     }
     OutputCleanResult "completed"
+  }
+  elseif ($global:AnalyzeOnlyActive -and ($fileNumber -gt 0)) {
+    OutputCleanResult "files_detected" $fileNumber
   }
   else {
     # No files found
