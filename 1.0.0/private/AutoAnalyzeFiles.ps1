@@ -55,7 +55,7 @@ function AutoAnalyzeFiles {
         OutputImageAnalysisResult "folderJPG_notFound"
         OutputImageAnalysisResult "backupJPG_notFound"
         OutputImageAnalysisResult "restoreFailed"
-        "$(Get-Date) | No folder.jpg or backup.jpg | $($folderPath)`n" >> "$($workingFolder)\MusicAnalyzerOutput.txt"
+        "$(Get-Date) | No folder.jpg or backup.jpg | $($folderPath)" >> "$($workingFolder)\MusicAnalyzerOutput.txt"
       }
       "True-False" {
         OutputImageAnalysisResult "folderJPG_present"
@@ -76,6 +76,7 @@ function AutoAnalyzeFiles {
     Write-Host ""
 
     # Control of normalization
+    Write-Host " Analyzing volume ... " -Background Yellow -Foreground Black
     if ($fileNumber -gt 0 ) {
       # Initialize file progress bar variables
       $fileCompleted = 0
@@ -84,7 +85,6 @@ function AutoAnalyzeFiles {
     
       # Analyzing-Block
       $volumeAnalysis = [System.Collections.ArrayList]::new()
-      Write-Host " Analyzing volume ... " -Background Yellow -Foreground Black
       $fileList | ForEach-Object {
         # Variables for the file
         $currentFile = @{
