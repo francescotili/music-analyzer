@@ -1,4 +1,6 @@
 Function MusicAnalyzer {
+  [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', 'AnalyzeOnlyActive',
+    Justification = 'Variable is global and used in different scopes')]
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $false)]
@@ -7,11 +9,18 @@ Function MusicAnalyzer {
 
     [Parameter(Mandatory = $false)]
     [switch]
-    $restoreBackups = $false
+    $restoreBackups = $false,
+
+    [Parameter(Mandatory = $false)]
+    [switch]
+    $analyzeOnly = $false
   )
 
-  $flags = "$($cleanBackups)-$($restoreBackups)"
+  # Global parameters set
+  $global:AnalyzeOnlyActive = $analyzeOnly
 
+  # Flag analysis workflow
+  $flags = "$($cleanBackups)-$($restoreBackups)"
   switch ($flags) {
     "True-True" {
       # Both parameters -cleanBackups and -restoreBackups specified
@@ -33,6 +42,7 @@ Function MusicAnalyzer {
       # No parameters specified
       Clear-Host
       OutputScriptHeader
+      Write-Host $analyzeOnly
     
       # Ask for path
       $workingFolder = Set-Path
