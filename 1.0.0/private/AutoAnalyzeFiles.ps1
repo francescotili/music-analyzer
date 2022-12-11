@@ -41,6 +41,39 @@ function AutoAnalyzeFiles {
     $fileList = Get-ChildItem -Path $folderPath -File
     $fileNumber = $fileList.Count
 
+    # Control of folder.jpg and backup.jpg
+    Write-Host " Analyzing images ... " -Background Yellow -Foreground Black
+    $folderJPGpresence = Test-Path -Path "$($folderPath)/folder.jpg"
+    $backupJPGpresence = Test-Path -Path "$($folderPath)/backup.jpg"
+
+    switch ("$($folderJPGpresence)-$($backupJPGpresence)") {
+      "True-True" {
+        OutputImageAnalysisResult "folderJPG_present"
+        OutputImageAnalysisResult "backupJPG_present"
+      }
+      "False-False" {
+        OutputImageAnalysisResult "folderJPG_notFound"
+        OutputImageAnalysisResult "backupJPG_notFound"
+        OutputImageAnalysisResult "restoreFailed"
+        # TODO: Append the folder path to an output file
+      }
+      "True-False" {
+        OutputImageAnalysisResult "folderJPG_present"
+        OutputImageAnalysisResult "backupJPG_notFound"
+        # TODO: Create backup.jpg from folder.jpg
+        OutputImageAnalysisResult "backupJPG_restored"
+      }
+      "False-True" {
+        OutputImageAnalysisResult "folderJPG_notFound"
+        OutputImageAnalysisResult "backupJPG_present"
+        # TODO: Restore folder.jpg from backup.jpg
+        OutputImageAnalysisResult "folderJPG_restored"
+      }
+      Default {}
+    }
+    Write-Host ""
+
+    # Control of normalization
     if ($fileNumber -gt 0 ) {
       # Initialize file progress bar variables
       $fileCompleted = 0
