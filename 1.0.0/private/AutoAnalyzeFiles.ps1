@@ -117,6 +117,9 @@ function AutoAnalyzeFiles {
               }) 1> $null
           }
         }
+        else {
+          OutputVolumeAnalysis "notSupported" "$($currentFile.name).$($currentFile.extension)"
+        }
       }
 
       # Find minimum volume_max

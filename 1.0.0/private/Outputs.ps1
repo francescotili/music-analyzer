@@ -93,10 +93,10 @@ function OutputVolumeAnalysis {
   )
 
   if ( [float]$volume -ge 0 ) {
-    [string]$stringVolume = "+{0:N1} dB" -f [float]$Volume
+    [string]$stringVolume = "+{0:N1} dB " -f [float]$Volume
   }
   else {
-    [string]$stringVolume = "{0:N1} dB" -f [float]$Volume
+    [string]$stringVolume = "{0:N1} dB " -f [float]$Volume
   }
 
   switch ($Value) {
@@ -104,6 +104,7 @@ function OutputVolumeAnalysis {
     'adjustmentNeeded' { Write-Host (" {0} {1} | {2}" -f $Emojis["warning"], $stringVolume, $fileName ) }
     'noNormalizing' { Write-Host (" $($Emojis["check"]) No need to normalize, max volume is alread 0 dB at the album level") }
     'needsNormalizing' { Write-Host (" $($Emojis["warning"]) Needs to be normalized at the album level") }
+    'notSupported' { Write-Host (" {0} {1} | {2}" -f $Emojis["ban"], "Unsupported", $fileName ) }
     'normalizing' { Write-Host " $($Emojis["volume"]) Normalizing ...    | $($fileName)" }
     'skipping' { Write-Host " $($Emojis["check"]) Already normalized | $($fileName)" }
     Default {}
@@ -118,7 +119,7 @@ function OutputFolderAnalysis {
   )
 
   switch ($value) {
-    'noFiles' { Write-Host " $($Emojis["check"]) No supported files in this folder" }
+    'noFiles' { Write-Host " $($Emojis["check"]) No files in this folder" }
     Default {}
   }
 }
