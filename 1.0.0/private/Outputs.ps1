@@ -198,6 +198,11 @@ function OutputRestoreResult {
       Write-Host "        NO FILES FOUND         " -BackgroundColor DarkRed -ForegroundColor White
       Write-Host ""
     }
+    'files_detected' {
+      Write-Host ""
+      Write-Host "    $($fileName) FILES CAN BE RESTORED   " -BackgroundColor DarkGreen -ForegroundColor White
+      Write-Host ""
+    }
     Default {}
   }
 }

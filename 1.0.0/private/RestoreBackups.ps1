@@ -36,7 +36,7 @@ function RestoreFiles {
   $activity = "Restoring from backup files"
   $activityProgressBar = [ProgressBar]::new($activity, 0, $fileNumber)
 
-  if ( $fileNumber -gt 0 ) {
+  if ((-Not $global:AnalyzeOnlyActive) -and ($fileNumber -gt 0)) {
     $filesToRestore | ForEach-Object {
       # File object
       $currentFile = @{
@@ -59,6 +59,9 @@ function RestoreFiles {
       OutputRestoreResult "backup_restored" "$($currentFile.name)"
     }
     OutputRestoreResult "completed"
+  }
+  elseif ($global:AnalyzeOnlyActive -and ($fileNumber -gt 0)) {
+    OutputRestoreResult "files_detected" $fileNumber
   }
   else {
     # No files found
