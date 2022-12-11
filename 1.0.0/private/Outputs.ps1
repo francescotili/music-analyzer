@@ -161,3 +161,37 @@ function OutputCleanResult {
     Default {}
   }
 }
+
+function OutputRestoreResult {
+  [CmdletBinding(DefaultParameterSetName)]
+  Param (
+    [Parameter(Mandatory = $true)]
+    [String]$Value,
+
+    [Parameter(Mandatory = $false)]
+    [String]$fileName
+  )
+
+  switch ($Value) {
+    'converted_deleted' {
+      Write-Host " $($Emojis["delete"]) Converted deleted | $($fileName)" 
+    }
+    'backup_restored' {
+      Write-Host " $($Emojis["check"]) Backup restored   | $($fileName)" 
+    }
+    'completed' {
+      Write-Host ""
+      Write-Host "                               " -BackgroundColor DarkGreen -ForegroundColor White
+      Write-Host "     RESTORING  COMPLETED      " -BackgroundColor DarkGreen -ForegroundColor White
+      Write-Host "                               " -BackgroundColor DarkGreen -ForegroundColor White
+      (New-Object System.Media.SoundPlayer "$env:windir\Media\Alarm03.wav").Play()
+      Write-Host ""
+    }
+    'noFiles' {
+      Write-Host ""
+      Write-Host "        NO FILES FOUND         " -BackgroundColor DarkRed -ForegroundColor White
+      Write-Host ""
+    }
+    Default {}
+  }
+}

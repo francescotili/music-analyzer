@@ -27,4 +27,41 @@ function RestoreFiles {
     [Parameter(Mandatory = $true)]
     [String]$workingPath
   )
+
+  $filesToRestore = Get-ChildItem -Path $workingPath -Filter "*.backup" -Recurse
+  
+  # Initialize file progress bar variables
+  $fileCompleted = 0
+  $fileNumber = $filesToRestore.Count
+  $activity = "Restoring from backup files"
+  $activityProgressBar = [ProgressBar]::new($activity, 0, $fileNumber)
+
+  if ( $fileNumber -gt 0 ) {
+    $filesToRestore | ForEach-Object {
+      # File object
+      $currentFile = @{
+        fullFilePath = $_.FullName
+        path         = Split-Path -Path $_.FullName -Parent
+        name         = (GetFilename( Split-Path -Path $_.FullName -Leaf)).fileName
+        extension    = (GetFilename( Split-Path -Path $_.FullName -Leaf)).extension
+      }
+
+      # Delete converted file
+      $fileCompleted += 1
+      if ( Test-Path -Path "$($currentFile.path)/$($currentFile.name)" ) {
+        $activityProgressBar.UpdateProgress("Deleting $($currentFile.name)", $fileCompleted)
+        Remove-Item "$($currentFile.path)/$($currentFile.name)"
+        OutputRestoreResult "converted_deleted" "$($currentFile.name)"
+      }
+
+      # Restore backup file      
+      Rename-Item -Path $currentFile.fullFilePath -NewName "$($currentFile.name)"
+      OutputRestoreResult "backup_restored" "$($currentFile.name)"
+    }
+    OutputRestoreResult "completed"
+  }
+  else {
+    # No files found
+    OutputRestoreResult "noFiles"
+  }
 }
