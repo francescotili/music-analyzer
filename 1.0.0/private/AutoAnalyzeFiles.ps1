@@ -67,7 +67,8 @@ function AutoAnalyzeFiles {
       "False-True" {
         OutputImageAnalysisResult "folderJPG_notFound"
         OutputImageAnalysisResult "backupJPG_present"
-        # TODO: Restore folder.jpg from backup.jpg
+        # Create backup.jpg from folder.jpg
+        Copy-Item -Path "$($folderPath)\backup.jpg" -Destination "$($folderPath)\folder.jpg"
         OutputImageAnalysisResult "folderJPG_restored"
       }
       Default {}
