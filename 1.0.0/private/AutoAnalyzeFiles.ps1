@@ -43,8 +43,8 @@ function AutoAnalyzeFiles {
 
     # Control of folder.jpg and backup.jpg
     Write-Host " Analyzing images ... " -Background Yellow -Foreground Black
-    $folderJPGpresence = Test-Path -Path "$($folderPath)/folder.jpg"
-    $backupJPGpresence = Test-Path -Path "$($folderPath)/backup.jpg"
+    $folderJPGpresence = Test-Path -Path "$($folderPath)\folder.jpg"
+    $backupJPGpresence = Test-Path -Path "$($folderPath)\backup.jpg"
 
     switch ("$($folderJPGpresence)-$($backupJPGpresence)") {
       "True-True" {
