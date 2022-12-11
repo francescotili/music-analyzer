@@ -55,7 +55,7 @@ function AutoAnalyzeFiles {
         OutputImageAnalysisResult "folderJPG_notFound"
         OutputImageAnalysisResult "backupJPG_notFound"
         OutputImageAnalysisResult "restoreFailed"
-        # TODO: Append the folder path to an output file
+        "$(Get-Date) | No folder.jpg or backup.jpg | $($folderPath)`n" >> "$($workingFolder)\output.txt"
       }
       "True-False" {
         OutputImageAnalysisResult "folderJPG_present"
