@@ -119,7 +119,7 @@ function OutputFolderAnalysis {
   )
 
   switch ($value) {
-    'noFiles' { Write-Host " $($Emojis["check"]) No files in this folder" }
+    'noFiles' { Write-Host " $($Emojis["check"]) No supported files in this folder" }
     Default {}
   }
 }

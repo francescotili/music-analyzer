@@ -121,40 +121,45 @@ function AutoAnalyzeFiles {
           OutputVolumeAnalysis "notSupported" "$($currentFile.name).$($currentFile.extension)"
         }
       }
-
-      # Find minimum volume_max
-      $maxVolumeGain = -100
-      foreach ($analysis in $volumeAnalysis) {
-        if ($analysis.maxVolume -gt $maxVolumeGain) {
-          $maxVolumeGain = $analysis.maxVolume
-        }
-      }
       Write-Host ""
     
       # Normalizing block
       Write-Host " Normalizing files ... " -Background Yellow -Foreground Black
-      if ($maxVolumeGain -eq 0) {
-        OutputVolumeAnalysis "noNormalizing"
-      }
-      else {
-        if (-Not $global:AnalyzeOnlyActive) {
-          foreach ($analysis in $volumeAnalysis) {
-            $fileCompleted += 1
-            $fileProgressBar.UpdateProgress("Normalizing $($analysis.file.name).$($analysis.file.extension)", $fileCompleted)
-
-            if ( $analysis.normalize ) {
-              NormalizeVolume $analysis.file $maxVolumeGain
-            }
-            else {
-              OutputVolumeAnalysis "skipping" $analysis.file.name
-            }
+      if ($volumeAnalysis.length -gt 0 ) {
+        # Find minimum volume_max
+        $maxVolumeGain = -200
+        foreach ($analysis in $volumeAnalysis) {
+          if ($analysis.maxVolume -gt $maxVolumeGain) {
+            $maxVolumeGain = $analysis.maxVolume
           }
         }
-        else {
-          OutputVolumeAnalysis "needsNormalizing"
+        if ($maxVolumeGain -eq 0) {
+          OutputVolumeAnalysis "noNormalizing"
         }
+        else {
+          if (-Not $global:AnalyzeOnlyActive) {
+            foreach ($analysis in $volumeAnalysis) {
+              $fileCompleted += 1
+              $fileProgressBar.UpdateProgress("Normalizing $($analysis.file.name).$($analysis.file.extension)", $fileCompleted)
+
+              if ( $analysis.normalize ) {
+                NormalizeVolume $analysis.file $maxVolumeGain
+              }
+              else {
+                OutputVolumeAnalysis "skipping" $analysis.file.name
+              }
+            }
+          }
+          else {
+            OutputVolumeAnalysis "needsNormalizing"
+          }
+        }
+        Write-Host ""
       }
-      Write-Host ""
+      else {
+        OutputFolderAnalysis "noFiles"
+        Write-Host ""
+      }
     }
     else {
       OutputFolderAnalysis "noFiles"
