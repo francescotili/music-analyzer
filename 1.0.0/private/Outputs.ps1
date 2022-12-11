@@ -42,6 +42,11 @@ Function OutputScriptHeader {
         Write-Host "This command will scan a specified folder and subfolders for .backup files and it will deleted them."
         Write-Host "$($Emojis["warning"]) The files will be deleted forever!"
       }
+      "RestoreBackups" {
+        Write-Host ""
+        Write-Host "This command will scan a specified folder and subfolders for .backup files and it will restore them."
+        Write-Host "$($Emojis["warning"]) Original files will be overwritten, if present!"
+      }
       Default {}
     }
   }
@@ -151,7 +156,41 @@ function OutputCleanResult {
       Write-Host ""
     }
     'deleted' {
-      Write-Host " $($Emojis["delete"]) Deleted | $($fileName)" 
+      Write-Host " $($Emojis["delete"]) Deleted | $($fileName)"
+    }
+    Default {}
+  }
+}
+
+function OutputRestoreResult {
+  [CmdletBinding(DefaultParameterSetName)]
+  Param (
+    [Parameter(Mandatory = $true)]
+    [String]$Value,
+
+    [Parameter(Mandatory = $false)]
+    [String]$fileName
+  )
+
+  switch ($Value) {
+    'converted_deleted' {
+      Write-Host " $($Emojis["delete"]) Converted deleted | $($fileName)" 
+    }
+    'backup_restored' {
+      Write-Host " $($Emojis["check"]) Backup restored   | $($fileName)" 
+    }
+    'completed' {
+      Write-Host ""
+      Write-Host "                               " -BackgroundColor DarkGreen -ForegroundColor White
+      Write-Host "     RESTORING  COMPLETED      " -BackgroundColor DarkGreen -ForegroundColor White
+      Write-Host "                               " -BackgroundColor DarkGreen -ForegroundColor White
+      (New-Object System.Media.SoundPlayer "$env:windir\Media\Alarm03.wav").Play()
+      Write-Host ""
+    }
+    'noFiles' {
+      Write-Host ""
+      Write-Host "        NO FILES FOUND         " -BackgroundColor DarkRed -ForegroundColor White
+      Write-Host ""
     }
     Default {}
   }
