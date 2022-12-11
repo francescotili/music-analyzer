@@ -42,7 +42,6 @@ Function MusicAnalyzer {
       # No parameters specified
       Clear-Host
       OutputScriptHeader
-      Write-Host $analyzeOnly
     
       # Ask for path
       $workingFolder = Set-Path
@@ -52,7 +51,9 @@ Function MusicAnalyzer {
       OutputScriptFooter
 
       # Start cleanup workflow
-      CleanBackups $workingFolder
+      if (-Not $global:AnalyzeOnlyActive) {
+        CleanBackups $workingFolder
+      }
     }
   }
 }
