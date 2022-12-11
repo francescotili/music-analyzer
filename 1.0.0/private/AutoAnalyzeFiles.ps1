@@ -55,7 +55,7 @@ function AutoAnalyzeFiles {
         OutputImageAnalysisResult "folderJPG_notFound"
         OutputImageAnalysisResult "backupJPG_notFound"
         OutputImageAnalysisResult "restoreFailed"
-        "$(Get-Date) | No folder.jpg or backup.jpg | $($folderPath)`n" >> "$($workingFolder)\output.txt"
+        "$(Get-Date) | No folder.jpg or backup.jpg | $($folderPath)`n" >> "$($workingFolder)\MusicAnalyzerOutput.txt"
       }
       "True-False" {
         OutputImageAnalysisResult "folderJPG_present"
