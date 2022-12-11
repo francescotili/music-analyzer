@@ -159,6 +159,11 @@ function OutputCleanResult {
     'deleted' {
       Write-Host " $($Emojis["delete"]) Deleted | $($fileName)"
     }
+    'files_detected' {
+      Write-Host ""
+      Write-Host "        $($fileName) FILES FOUND         " -BackgroundColor DarkYellow -ForegroundColor White
+      Write-Host ""
+    }
     Default {}
   }
 }
